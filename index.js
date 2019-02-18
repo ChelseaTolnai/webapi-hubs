@@ -39,6 +39,19 @@ server.post('/hubs', (req, res) => {
     });
 });
 
+server.delete('/hubs/:id', (req, res) => {
+    const hubId = req.params.id;
+
+    db.hubs
+    .remove(hubId)
+    .then(deleted => {
+        res.status(204).end();
+    })
+    .catch(({ code, message }) => {
+        res.status(code).json({ success: false, message });
+    });
+});
+
 server.listen(4000, () => {
     console.log(`\n *** Running on port 4000 ***\n`)
 });
